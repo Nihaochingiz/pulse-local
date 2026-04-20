@@ -1,21 +1,52 @@
 services:
   postgres:
-    image: postgres:latest
-    container_name: my-postgres
+    image: postgres:17-alpine  
+    container_name: fitness-postgres
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-mysecretpassword}
       POSTGRES_USER: ${DB_USER:-myuser}
-      POSTGRES_DB: ${DB_NAME:-mydatabase}
+      POSTGRES_DB: ${DB_NAME:-fitnessdb}
     ports:
-        - "${DB_PORT:-5433}:5432"
+      - "${DB_PORT:-5433}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-myuser}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-myuser} -d ${DB_NAME:-fitnessdb}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - fitness-network
+
+  backend:
+    build: ./backend
+    container_name: fitness-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-myuser}:${DB_PASSWORD:-mysecretpassword}@postgres:5432/${DB_NAME:-fitnessdb}
+    networks:
+      - fitness-network
+
+  frontend:
+    build: ./frontend
+    container_name: fitness-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    networks:
+      - fitness-network
 
 volumes:
   postgres_data:
+
+networks:
+  fitness-network:
+    driver: bridge
