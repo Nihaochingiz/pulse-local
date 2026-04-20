@@ -1,9 +1,7 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
-from typing import List
-from . import models, schemas, database
-from .routers import running, pushups, meals, points
+from . import models, database
+from .routers import running, pushups, dumbbells, meals, points
 
 app = FastAPI(title="Fitness Tracker API")
 
@@ -17,6 +15,7 @@ app.add_middleware(
 
 app.include_router(running.router, prefix="/api/running", tags=["running"])
 app.include_router(pushups.router, prefix="/api/pushups", tags=["pushups"])
+app.include_router(dumbbells.router, prefix="/api/dumbbells", tags=["dumbbells"])
 app.include_router(meals.router, prefix="/api/meals", tags=["meals"])
 app.include_router(points.router, prefix="/api/points", tags=["points"])
 

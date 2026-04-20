@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Running from './components/Running'
 import Pushups from './components/Pushups'
+import Dumbbells from './components/Dumbbells'
 import Meals from './components/Meals'
 import PointsGame from './components/PointsGame'
 import { pointsAPI } from './api'
@@ -8,7 +9,6 @@ import { pointsAPI } from './api'
 function App() {
   const [activeTab, setActiveTab] = useState('running')
   const [totalPoints, setTotalPoints] = useState(0)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     loadPoints()
@@ -30,6 +30,7 @@ function App() {
   const tabs = [
     { id: 'running', label: 'Бег' },
     { id: 'pushups', label: 'Отжимания' },
+    { id: 'dumbbells', label: 'Гантели' },
     { id: 'meals', label: 'Питание' },
     { id: 'game', label: 'Награды' }
   ]
@@ -85,7 +86,7 @@ function App() {
         </div>
       </div>
 
-      {/* Navigation - адаптивное меню */}
+      {/* Navigation */}
       <div style={{
         background: 'white',
         padding: '0',
@@ -125,28 +126,18 @@ function App() {
         </div>
       </div>
 
-      {/* Main Content - адаптивные отступы */}
+      {/* Main Content */}
       <div style={{ 
         maxWidth: '1400px', 
         margin: '0 auto', 
-        padding: '20px',
-        '@media (maxWidth: 768px)': {
-          padding: '12px'
-        }
+        padding: '20px'
       }}>
         {activeTab === 'running' && <Running onDataChange={updatePoints} />}
         {activeTab === 'pushups' && <Pushups onDataChange={updatePoints} />}
+        {activeTab === 'dumbbells' && <Dumbbells onDataChange={updatePoints} />}
         {activeTab === 'meals' && <Meals onDataChange={updatePoints} />}
         {activeTab === 'game' && <PointsGame points={totalPoints} onSpend={updatePoints} />}
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .main-content {
-            padding: 12px;
-          }
-        }
-      `}</style>
     </div>
   )
 }

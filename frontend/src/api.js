@@ -14,6 +14,11 @@ export const pushupsAPI = {
   create: (data) => API.post('/pushups/', data)
 }
 
+export const dumbbellsAPI = {
+  getAll: () => API.get('/dumbbells/'),
+  create: (data) => API.post('/dumbbells/', data)
+}
+
 export const mealsAPI = {
   getAll: () => API.get('/meals/'),
   create: (data) => API.post('/meals/', data)

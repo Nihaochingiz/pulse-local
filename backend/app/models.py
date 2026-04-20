@@ -19,13 +19,23 @@ class Pushups(Base):
     count = Column(Integer, nullable=False)
     points_earned = Column(Integer, default=0)
 
+class Dumbbells(Base):
+    __tablename__ = "dumbbells"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(Date, default=func.current_date())
+    weight_kg = Column(DECIMAL(5, 2), nullable=False)
+    repetitions = Column(Integer, nullable=False)
+    sets = Column(Integer, nullable=False)
+    points_earned = Column(Integer, default=0)
+
 class Meals(Base):
     __tablename__ = "meals"
     
     id = Column(Integer, primary_key=True, index=True)
     date = Column(Date, default=func.current_date())
     meal_name = Column(String(255), nullable=False)
-    calories = Column(Integer, nullable=False)
+    calories = Column(Integer, default=0)
     is_healthy = Column(Boolean, default=True)
     points_earned = Column(Integer, default=0)
 

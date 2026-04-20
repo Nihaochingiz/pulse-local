@@ -31,9 +31,25 @@ class PushupsResponse(PushupsBase):
     class Config:
         from_attributes = True
 
+class DumbbellsBase(BaseModel):
+    weight_kg: float
+    repetitions: int
+    sets: int
+
+class DumbbellsCreate(DumbbellsBase):
+    pass
+
+class DumbbellsResponse(DumbbellsBase):
+    id: int
+    date: date
+    points_earned: int
+    
+    class Config:
+        from_attributes = True
+
 class MealsBase(BaseModel):
     meal_name: str
-    calories: int
+    calories: Optional[int] = 0
     is_healthy: bool = True
 
 class MealsCreate(MealsBase):
