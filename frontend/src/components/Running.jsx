@@ -38,24 +38,30 @@ function Running({ onDataChange }) {
 
   return (
     <div>
+      {/* Form Card */}
       <div style={{
         background: 'white',
         borderRadius: '16px',
-        padding: '32px',
-        marginBottom: '32px',
+        padding: '20px',
+        marginBottom: '20px',
         boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
         border: '1px solid #e9ecef'
       }}>
         <h2 style={{
           color: 'rgb(33, 32, 33)',
-          fontSize: '24px',
-          marginBottom: '24px',
+          fontSize: '20px',
+          marginBottom: '20px',
           fontWeight: '600'
         }}>
           Новая пробежка
         </h2>
         <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column',
+            gap: '16px',
+            marginBottom: '20px'
+          }}>
             <div>
               <label style={{
                 display: 'block',
@@ -81,7 +87,8 @@ function Running({ onDataChange }) {
                   borderRadius: '8px',
                   color: '#212529',
                   fontSize: '16px',
-                  outline: 'none'
+                  outline: 'none',
+                  boxSizing: 'border-box'
                 }}
                 onFocus={(e) => e.target.style.borderColor = 'rgb(180, 162, 253)'}
                 onBlur={(e) => e.target.style.borderColor = '#dee2e6'}
@@ -111,7 +118,8 @@ function Running({ onDataChange }) {
                   borderRadius: '8px',
                   color: '#212529',
                   fontSize: '16px',
-                  outline: 'none'
+                  outline: 'none',
+                  boxSizing: 'border-box'
                 }}
                 onFocus={(e) => e.target.style.borderColor = 'rgb(180, 162, 253)'}
                 onBlur={(e) => e.target.style.borderColor = '#dee2e6'}
@@ -140,30 +148,40 @@ function Running({ onDataChange }) {
         </form>
       </div>
 
+      {/* History Table - адаптивная таблица */}
       <div style={{
         background: 'white',
         borderRadius: '16px',
-        padding: '32px',
+        padding: '20px',
         boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
         border: '1px solid #e9ecef'
       }}>
         <h3 style={{
           color: 'rgb(33, 32, 33)',
-          fontSize: '20px',
-          marginBottom: '24px',
+          fontSize: '18px',
+          marginBottom: '16px',
           fontWeight: '600'
         }}>
           История тренировок
         </h3>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div style={{ 
+          overflowX: 'auto', 
+          WebkitOverflowScrolling: 'touch',
+          margin: '0 -20px',
+          padding: '0 20px'
+        }}>
+          <table style={{ 
+            width: '100%', 
+            borderCollapse: 'collapse',
+            minWidth: '500px'
+          }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #e9ecef' }}>
-                <th style={{ textAlign: 'left', padding: '12px', color: '#6c757d', fontSize: '14px', fontWeight: '600' }}>Дата</th>
-                <th style={{ textAlign: 'left', padding: '12px', color: '#6c757d', fontSize: '14px', fontWeight: '600' }}>Дистанция</th>
-                <th style={{ textAlign: 'left', padding: '12px', color: '#6c757d', fontSize: '14px', fontWeight: '600' }}>Время</th>
-                <th style={{ textAlign: 'left', padding: '12px', color: '#6c757d', fontSize: '14px', fontWeight: '600' }}>Очки</th>
-                <th style={{ textAlign: 'left', padding: '12px', color: '#6c757d', fontSize: '14px', fontWeight: '600' }}>Темп</th>
+                <th style={{ textAlign: 'left', padding: '10px 8px', color: '#6c757d', fontSize: '12px', fontWeight: '600' }}>Дата</th>
+                <th style={{ textAlign: 'left', padding: '10px 8px', color: '#6c757d', fontSize: '12px', fontWeight: '600' }}>Дист.</th>
+                <th style={{ textAlign: 'left', padding: '10px 8px', color: '#6c757d', fontSize: '12px', fontWeight: '600' }}>Время</th>
+                <th style={{ textAlign: 'left', padding: '10px 8px', color: '#6c757d', fontSize: '12px', fontWeight: '600' }}>Очки</th>
+                <th style={{ textAlign: 'left', padding: '10px 8px', color: '#6c757d', fontSize: '12px', fontWeight: '600' }}>Темп</th>
               </tr>
             </thead>
             <tbody>
@@ -171,29 +189,29 @@ function Running({ onDataChange }) {
                 const pace = (w.duration_minutes / w.distance_km).toFixed(1)
                 return (
                   <tr key={w.id} style={{ borderBottom: '1px solid #f1f3f5' }}>
-                    <td style={{ padding: '12px', color: '#495057', fontSize: '14px' }}>
+                    <td style={{ padding: '10px 8px', color: '#495057', fontSize: '13px' }}>
                       {new Date(w.date).toLocaleDateString('ru-RU', { month: 'short', day: 'numeric' })}
                     </td>
-                    <td style={{ padding: '12px', color: '#495057', fontSize: '14px' }}>
-                      {w.distance_km} км
+                    <td style={{ padding: '10px 8px', color: '#495057', fontSize: '13px' }}>
+                      {w.distance_km}
                     </td>
-                    <td style={{ padding: '12px', color: '#495057', fontSize: '14px' }}>
-                      {w.duration_minutes} мин
+                    <td style={{ padding: '10px 8px', color: '#495057', fontSize: '13px' }}>
+                      {w.duration_minutes}
                     </td>
-                    <td style={{ padding: '12px' }}>
+                    <td style={{ padding: '10px 8px' }}>
                       <span style={{
                         background: 'rgba(180, 162, 253, 0.1)',
                         color: 'rgb(180, 162, 253)',
-                        padding: '4px 8px',
-                        borderRadius: '6px',
-                        fontSize: '12px',
+                        padding: '2px 6px',
+                        borderRadius: '4px',
+                        fontSize: '11px',
                         fontWeight: '600'
                       }}>
                         +{w.points_earned}
                       </span>
                     </td>
-                    <td style={{ padding: '12px', color: '#6c757d', fontSize: '14px' }}>
-                      {pace} мин/км
+                    <td style={{ padding: '10px 8px', color: '#6c757d', fontSize: '12px' }}>
+                      {pace}
                     </td>
                   </tr>
                 )
@@ -201,7 +219,7 @@ function Running({ onDataChange }) {
               {workouts.length === 0 && (
                 <tr>
                   <td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: '#adb5bd' }}>
-                    Нет тренировок. Начните первую пробежку!
+                    Нет тренировок
                   </td>
                 </tr>
               )}
